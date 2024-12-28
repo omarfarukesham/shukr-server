@@ -22,7 +22,7 @@ app.use('/api/blogs', blogRouter)
 app.get('/', (req: Request, res: Response) => {
   res.send({
     status: true,
-    message: 'Server is now Live - chill',
+    message: 'Shukur Admin Server is now Live - Alhamdulillah',
   })
 })
 
