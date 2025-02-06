@@ -6,6 +6,7 @@ import blogRouter from './module/blog/blog.router'
 import { globalErrorHandler } from './middlewares/globalErrorHandler'
 import adminRouter from './module/admin/admin.router'
 import notFound from './middlewares/notFound'
+import newStickyRouter from './module/newSticky/newSticky.router'
 
 
 const app = express()
@@ -17,6 +18,7 @@ app.use('/api/auth', authRouter)
 app.use('/api/admin', adminRouter)
 app.use('/api/user', userRouter)
 app.use('/api/blogs', blogRouter)
+app.use('/api/sticky', newStickyRouter)
 
 
 app.get('/', (req: Request, res: Response) => {
