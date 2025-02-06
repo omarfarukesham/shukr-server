@@ -7,6 +7,7 @@ import { globalErrorHandler } from './middlewares/globalErrorHandler'
 import adminRouter from './module/admin/admin.router'
 import notFound from './middlewares/notFound'
 import newStickyRouter from './module/newSticky/newSticky.router'
+import shukrInspirationRouter from './module/shukrInspiration/shukrInspiration.router'
 
 
 const app = express()
@@ -19,6 +20,7 @@ app.use('/api/admin', adminRouter)
 app.use('/api/user', userRouter)
 app.use('/api/blogs', blogRouter)
 app.use('/api/sticky', newStickyRouter)
+app.use('/api/inspiration', shukrInspirationRouter )
 
 
 app.get('/', (req: Request, res: Response) => {
