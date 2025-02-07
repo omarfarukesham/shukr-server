@@ -12,6 +12,10 @@ const admin_router_1 = __importDefault(require("./module/admin/admin.router"));
 const notFound_1 = __importDefault(require("./middlewares/notFound"));
 const newSticky_router_1 = __importDefault(require("./module/newSticky/newSticky.router"));
 const shukrInspiration_router_1 = __importDefault(require("./module/shukrInspiration/shukrInspiration.router"));
+const positiveThinking_router_1 = require("./module/positiveThinking/positiveThinking.router");
+const jazakallahul_router_1 = require("./module/jazakallahul/jazakallahul.router");
+const shukrPost_router_1 = require("./module/shukrPost/shukrPost.router");
+const category_router_1 = __importDefault(require("./module/category/category.router"));
 const app = (0, express_1.default)();
 // middleware
 app.use(express_1.default.json());
@@ -21,6 +25,10 @@ app.use('/api/user', user_router_1.default);
 app.use('/api/blogs', blog_router_1.default);
 app.use('/api/sticky', newSticky_router_1.default);
 app.use('/api/inspiration', shukrInspiration_router_1.default);
+app.use('/api/positiveThinking', positiveThinking_router_1.positiveThinkingRouter);
+app.use('/api/jazakallahul', jazakallahul_router_1.jazakallahulRouter);
+app.use('/api/shukrPost', shukrPost_router_1.shukrPostRouter);
+app.use('/api/category', category_router_1.default);
 app.get('/', (req, res) => {
     res.send({
         status: true,
