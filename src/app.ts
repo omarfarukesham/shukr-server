@@ -7,11 +7,8 @@ import { globalErrorHandler } from './middlewares/globalErrorHandler'
 import adminRouter from './module/admin/admin.router'
 import notFound from './middlewares/notFound'
 import newStickyRouter from './module/newSticky/newSticky.router'
-import shukrInspirationRouter from './module/shukrInspiration/shukrInspiration.router'
-import { positiveThinkingRouter } from './module/positiveThinking/positiveThinking.router'
-import { jazakallahulRouter } from './module/jazakallahul/jazakallahul.router'
-import { shukrPostRouter } from './module/shukrPost/shukrPost.router'
 import categoryRouqter from './module/category/category.router'
+import { dailyDuaRouter } from './module/dailyDua/dailyDua.router'
 
 
 const app = express()
@@ -24,11 +21,8 @@ app.use('/api/admin', adminRouter)
 app.use('/api/user', userRouter)
 app.use('/api/blogs', blogRouter)
 app.use('/api/sticky', newStickyRouter)
-app.use('/api/inspiration', shukrInspirationRouter )
-app.use('/api/positiveThinking',positiveThinkingRouter )
-app.use('/api/jazakallahul',jazakallahulRouter)
-app.use('/api/shukrPost',shukrPostRouter)
 app.use('/api/category', categoryRouqter)
+app.use('/api/dailydua', dailyDuaRouter)
 
 
 app.get('/', (req: Request, res: Response) => {
