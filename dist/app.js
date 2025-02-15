@@ -13,6 +13,7 @@ const notFound_1 = __importDefault(require("./middlewares/notFound"));
 const newSticky_router_1 = __importDefault(require("./module/newSticky/newSticky.router"));
 const category_router_1 = __importDefault(require("./module/category/category.router"));
 const dailyDua_router_1 = require("./module/dailyDua/dailyDua.router");
+const challenge_router_1 = __importDefault(require("./module/challenges/challenge.router"));
 const app = (0, express_1.default)();
 // middleware
 app.use(express_1.default.json());
@@ -23,6 +24,7 @@ app.use('/api/blogs', blog_router_1.default);
 app.use('/api/sticky', newSticky_router_1.default);
 app.use('/api/category', category_router_1.default);
 app.use('/api/dailydua', dailyDua_router_1.dailyDuaRouter);
+app.use('/api/challenge', challenge_router_1.default);
 app.get('/', (req, res) => {
     res.send({
         status: true,
