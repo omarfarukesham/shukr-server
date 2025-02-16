@@ -24,7 +24,7 @@ export const createCategory = async (req: Request, res: Response, next: NextFunc
 };
 
 export const getAllByCategoryType = async (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.query)
+    // console.log(req.query)
     try {
       const { type } = req.query;
       if (!type || typeof type !== 'string') {
