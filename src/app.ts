@@ -10,6 +10,7 @@ import newStickyRouter from './module/newSticky/newSticky.router'
 import categoryRouqter from './module/category/category.router'
 import { dailyDuaRouter } from './module/dailyDua/dailyDua.router'
 import ChallengeRouter from './module/challenges/challenge.router'
+import contentRouter from './module/content/content.router'
 
 
 const app = express()
@@ -25,6 +26,7 @@ app.use('/api/sticky', newStickyRouter)
 app.use('/api/category', categoryRouqter)
 app.use('/api/dailydua', dailyDuaRouter)
 app.use('/api/challenge', ChallengeRouter)
+app.use('/api/homeContent', contentRouter)
 
 
 app.get('/', (req: Request, res: Response) => {
