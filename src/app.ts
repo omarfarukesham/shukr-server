@@ -11,12 +11,33 @@ import categoryRouqter from './module/category/category.router'
 import { dailyDuaRouter } from './module/dailyDua/dailyDua.router'
 import ChallengeRouter from './module/challenges/challenge.router'
 import contentRouter from './module/content/content.router'
-
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 const app = express()
 
-// middleware
-app.use(express.json())
+
+// CORS configuration has solved the issue
+const allowedOrigins = ['http://localhost:5173','http://localhost:3000', 'http://localhost:5174', 'https://boitoi-admin.vercel.app'];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true, 
+}));
+
+// Parsers
+app.use(express.json());
+app.use(cookieParser());
+
+
+// Routes
 
 app.use('/api/auth', authRouter)
 app.use('/api/admin', adminRouter)

@@ -15,9 +15,27 @@ const category_router_1 = __importDefault(require("./module/category/category.ro
 const dailyDua_router_1 = require("./module/dailyDua/dailyDua.router");
 const challenge_router_1 = __importDefault(require("./module/challenges/challenge.router"));
 const content_router_1 = __importDefault(require("./module/content/content.router"));
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
+const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
-// middleware
+// CORS configuration has solved the issue
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:5174', 'https://boitoi-admin.vercel.app'];
+app.use((0, cors_1.default)({
+    origin: function (origin, callback) {
+        if (!origin)
+            return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+            const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    },
+    credentials: true,
+}));
+// Parsers
 app.use(express_1.default.json());
+app.use((0, cookie_parser_1.default)());
+// Routes
 app.use('/api/auth', auth_router_1.default);
 app.use('/api/admin', admin_router_1.default);
 app.use('/api/user', user_router_1.default);
