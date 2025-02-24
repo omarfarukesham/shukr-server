@@ -17,9 +17,10 @@ const challenge_router_1 = __importDefault(require("./module/challenges/challeng
 const content_router_1 = __importDefault(require("./module/content/content.router"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const cors_1 = __importDefault(require("cors"));
+const template_router_1 = __importDefault(require("./module/template/template.router"));
 const app = (0, express_1.default)();
 // CORS configuration has solved the issue
-const allowedOrigins = ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:5174', 'https://boitoi-admin.vercel.app'];
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:5174'];
 app.use((0, cors_1.default)({
     origin: function (origin, callback) {
         if (!origin)
@@ -43,8 +44,9 @@ app.use('/api/blogs', blog_router_1.default);
 app.use('/api/sticky', newSticky_router_1.default);
 app.use('/api/category', category_router_1.default);
 app.use('/api/dailydua', dailyDua_router_1.dailyDuaRouter);
-app.use('/api/challenge', challenge_router_1.default);
 app.use('/api/homeContent', content_router_1.default);
+app.use('/api/template', template_router_1.default);
+app.use('/api/challenge', challenge_router_1.default);
 app.get('/', (req, res) => {
     res.send({
         status: true,

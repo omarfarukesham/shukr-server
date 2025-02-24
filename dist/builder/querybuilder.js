@@ -30,14 +30,15 @@ class QueryBuilder {
         this.modelQuery = this.modelQuery.find(queryObj);
         return this;
     }
-    //   paginate() {
-    //     const page = Number(this?.query?.page) || 1
-    //     const limit = Number(this?.query?.limit) || 10
-    //     // skip = (page-1)*limit
-    //     const skip = (page - 1) * limit
-    //     this.modelQuery = this.modelQuery.skip(skip).limit(limit)
-    //     return this
-    //   }
+    paginate() {
+        var _a, _b;
+        const page = Number((_a = this === null || this === void 0 ? void 0 : this.query) === null || _a === void 0 ? void 0 : _a.page) || 1;
+        const limit = Number((_b = this === null || this === void 0 ? void 0 : this.query) === null || _b === void 0 ? void 0 : _b.limit) || 10;
+        // skip = (page-1)*limit
+        const skip = (page - 1) * limit;
+        this.modelQuery = this.modelQuery.skip(skip).limit(limit);
+        return this;
+    }
     sort() {
         var _a, _b, _c, _d;
         let sortStr;

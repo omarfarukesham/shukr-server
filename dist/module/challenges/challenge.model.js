@@ -28,6 +28,18 @@ const challengeSchema = new mongoose_1.Schema({
         type: Date,
         default: null,
     },
+    templateId: [
+        {
+            type: mongoose_1.Schema.Types.ObjectId,
+            ref: "Template",
+            required: true,
+        },
+    ],
+    userInfo: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "appUser",
+        required: true
+    },
     isActive: {
         type: Boolean,
         default: true,
@@ -43,13 +55,12 @@ const challengeSchema = new mongoose_1.Schema({
     reminderTime: {
         type: String,
     },
+    // category: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: "Category",
+    // },
     category: {
         type: String,
-    },
-    userInfo: {
-        type: mongoose_1.Schema.Types.ObjectId,
-        ref: "User",
-        requre: true
     },
     visibility: {
         type: String,

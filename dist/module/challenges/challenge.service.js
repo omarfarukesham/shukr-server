@@ -20,6 +20,22 @@ const createChallenge = (payload) => __awaiter(void 0, void 0, void 0, function*
     return result;
 });
 // Search, filtering, and pagination functions for challenges
+// const getChallenges = async (query: Record<string, unknown>) => {
+//   const searchableFields = ["name", "description", "category"];
+//   const challenges = new QueryBuilder(Challenge.find(), query)
+//     .search(searchableFields)
+//     .filter()
+//     .sort()
+//     .select();
+//   const result = await challenges.modelQuery
+//     .populate("userInfo") 
+//     .populate({
+//       path: "templateId", 
+//       model: "Template",  
+//       options: { strictPopulate: false }, 
+//     });
+//   return result;
+// };
 const getChallenges = (query) => __awaiter(void 0, void 0, void 0, function* () {
     const searchableFields = ["name", "description", "category"];
     const challenges = new querybuilder_1.default(challenge_model_1.default.find(), query)
@@ -28,10 +44,25 @@ const getChallenges = (query) => __awaiter(void 0, void 0, void 0, function* () 
         .sort()
         .select();
     const result = yield challenges.modelQuery;
-    return result;
+    const populatedResult = yield Promise.all(result.map((doc) => __awaiter(void 0, void 0, void 0, function* () {
+        yield doc.populate("userInfo");
+        yield doc.populate({
+            path: "templateId",
+            model: "Template",
+            options: { strictPopulate: false },
+        });
+        return doc;
+    })));
+    return populatedResult;
 });
 const getSingleChallenge = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield challenge_model_1.default.findById(id);
+    const result = yield challenge_model_1.default.findById(id)
+        .populate("userInfo")
+        .populate({
+        path: "templateId",
+        model: "Template",
+        options: { strictPopulate: false },
+    });
     return result;
 });
 const updateChallenge = (id, data) => __awaiter(void 0, void 0, void 0, function* () {

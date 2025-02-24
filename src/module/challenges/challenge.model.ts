@@ -30,6 +30,18 @@ const challengeSchema = new Schema(
       type: Date,
       default: null,
     },
+    templateId: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Template",
+        required: true,
+      },
+    ],
+    userInfo: {
+      type: Schema.Types.ObjectId,
+      ref: "appUser",
+      required:true
+    },
     isActive: {
       type: Boolean,
       default: true,
@@ -45,13 +57,12 @@ const challengeSchema = new Schema(
     reminderTime: {
       type: String,
     },
+    // category: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: "Category",
+    // },
     category: {
       type: String,
-    },
-    userInfo: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-      requre:true
     },
     visibility: {
       type: String,

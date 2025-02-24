@@ -13,12 +13,13 @@ import ChallengeRouter from './module/challenges/challenge.router'
 import contentRouter from './module/content/content.router'
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import templateRouter from './module/template/template.router'
 
 const app = express()
 
 
 // CORS configuration has solved the issue
-const allowedOrigins = ['http://localhost:5173','http://localhost:3000', 'http://localhost:5174', 'https://boitoi-admin.vercel.app'];
+const allowedOrigins = ['http://localhost:5173','http://localhost:3000', 'http://localhost:5174'];
 
 app.use(cors({
   origin: function (origin, callback) {
@@ -46,8 +47,9 @@ app.use('/api/blogs', blogRouter)
 app.use('/api/sticky', newStickyRouter)
 app.use('/api/category', categoryRouqter)
 app.use('/api/dailydua', dailyDuaRouter)
-app.use('/api/challenge', ChallengeRouter)
 app.use('/api/homeContent', contentRouter)
+app.use('/api/template', templateRouter)
+app.use('/api/challenge', ChallengeRouter)
 
 
 app.get('/', (req: Request, res: Response) => {

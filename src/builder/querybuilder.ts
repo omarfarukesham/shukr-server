@@ -37,16 +37,16 @@ class QueryBuilder<T> {
     return this;
   }
   
-//   paginate() {
-//     const page = Number(this?.query?.page) || 1
-//     const limit = Number(this?.query?.limit) || 10
-//     // skip = (page-1)*limit
-//     const skip = (page - 1) * limit
+  paginate() {
+    const page = Number(this?.query?.page) || 1
+    const limit = Number(this?.query?.limit) || 10
+    // skip = (page-1)*limit
+    const skip = (page - 1) * limit
 
-//     this.modelQuery = this.modelQuery.skip(skip).limit(limit)
+    this.modelQuery = this.modelQuery.skip(skip).limit(limit)
 
-//     return this
-//   }
+    return this
+  }
 
   sort() {
     let sortStr
