@@ -19,19 +19,33 @@ const app = express()
 
 
 // CORS configuration has solved the issue
-const allowedOrigins = ['http://localhost:5173','http://localhost:3000', 'http://localhost:5174'];
+// const allowedOrigins = ['http://localhost:5173','http://localhost:3000', 'http://localhost:5174'];
+
+// app.use(cors({
+//   origin: function (origin, callback) {
+//     if (!origin) return callback(null, true);
+//     if (allowedOrigins.indexOf(origin) === -1) {
+//       const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+//       return callback(new Error(msg), false);
+//     }
+//     return callback(null, true);
+//   },
+//   credentials: true, 
+// }));
+
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:5174'];
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, origin); // Return the actual origin dynamically
+    } else {
+      callback(new Error('The CORS policy does not allow this origin'), false);
     }
-    return callback(null, true);
   },
-  credentials: true, 
+  credentials: true,
 }));
+
 
 // Parsers
 app.use(express.json());

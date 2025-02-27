@@ -20,16 +20,27 @@ const cors_1 = __importDefault(require("cors"));
 const template_router_1 = __importDefault(require("./module/template/template.router"));
 const app = (0, express_1.default)();
 // CORS configuration has solved the issue
+// const allowedOrigins = ['http://localhost:5173','http://localhost:3000', 'http://localhost:5174'];
+// app.use(cors({
+//   origin: function (origin, callback) {
+//     if (!origin) return callback(null, true);
+//     if (allowedOrigins.indexOf(origin) === -1) {
+//       const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+//       return callback(new Error(msg), false);
+//     }
+//     return callback(null, true);
+//   },
+//   credentials: true, 
+// }));
 const allowedOrigins = ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:5174'];
 app.use((0, cors_1.default)({
     origin: function (origin, callback) {
-        if (!origin)
-            return callback(null, true);
-        if (allowedOrigins.indexOf(origin) === -1) {
-            const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-            return callback(new Error(msg), false);
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, origin); // Return the actual origin dynamically
         }
-        return callback(null, true);
+        else {
+            callback(new Error('The CORS policy does not allow this origin'), false);
+        }
     },
     credentials: true,
 }));
