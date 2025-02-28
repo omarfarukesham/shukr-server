@@ -32,7 +32,7 @@ const app = (0, express_1.default)();
 //   },
 //   credentials: true, 
 // }));
-const allowedOrigins = ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:5174'];
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:5174', 'https://shukr-dashboard.vercel.app'];
 app.use((0, cors_1.default)({
     origin: function (origin, callback) {
         if (!origin || allowedOrigins.includes(origin)) {
