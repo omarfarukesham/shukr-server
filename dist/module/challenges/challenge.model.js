@@ -48,6 +48,10 @@ const challengeSchema = new mongoose_1.Schema({
         type: Boolean,
         default: false,
     },
+    isFeatured: {
+        type: Boolean,
+        default: false,
+    },
     resettable: {
         type: Boolean,
         default: false,

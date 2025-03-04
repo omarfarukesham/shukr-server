@@ -8,9 +8,10 @@ export interface IChallenge {
     startedAt?: Date | null;
     completedAt?: Date | null;
     isActive: boolean;
-    isLoop: boolean;
+    isLoop?: boolean;
+    isFeatured?: boolean;
     templateId: string[]; 
-    isResettable: boolean;
+    isResettable?: boolean;
     reminderTime?: string;
     userInfo: string[];
     category?: string;
