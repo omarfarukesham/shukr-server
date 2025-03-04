@@ -45,6 +45,7 @@ const ContentSchema = new Schema<IContentModel>(
         "jazakallahulKhair",
         "shukrPosts",
         "duaOfTheDay",
+        "natureImg",
         "whatNew",
       ],
       required: true,

@@ -75,6 +75,7 @@ const ContentSchema = new mongoose_1.Schema({
             "jazakallahulKhair",
             "shukrPosts",
             "duaOfTheDay",
+            "natureImg",
             "whatNew",
         ],
         required: true,

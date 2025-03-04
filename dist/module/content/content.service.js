@@ -35,6 +35,7 @@ const getAllContent = (query) => __awaiter(void 0, void 0, void 0, function* () 
         jazakallahulKhair: allContent.filter(c => c.category === 'jazakallahulKhair'),
         shukrPosts: allContent.filter(c => c.category === 'shukrPosts'),
         duaOfTheDay: allContent.filter(c => c.category === 'duaOfTheDay'),
+        natureImg: allContent.filter(c => c.category === 'natureImg'),
         whatNew: allContent.filter(c => c.category === 'whatNew'),
     };
     return {

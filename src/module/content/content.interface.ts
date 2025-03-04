@@ -13,6 +13,7 @@ export interface IContent {
       | "positiveThinking"
       | "jazakallahulKhair"
       | "shukrPosts"
+      | "natureImg"
       | "duaOfTheDay"
       | "whatNew";
   }

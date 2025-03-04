@@ -26,6 +26,7 @@ const getAllContent = async (query: Record<string, unknown>) => {
     jazakallahulKhair: allContent.filter(c => c.category === 'jazakallahulKhair'),
     shukrPosts: allContent.filter(c => c.category === 'shukrPosts'),
     duaOfTheDay: allContent.filter(c => c.category === 'duaOfTheDay'),
+    natureImg: allContent.filter(c => c.category === 'natureImg'),
     whatNew: allContent.filter(c => c.category === 'whatNew'),
   };
 
