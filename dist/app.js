@@ -32,17 +32,20 @@ const app = (0, express_1.default)();
 //   },
 //   credentials: true, 
 // }));
-const allowedOrigins = ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:5174', 'https://shukr-dashboard.vercel.app'];
+// const allowedOrigins = ['http://localhost:5173', 'http://localhost:3000', 'http://localhost:5174','https://shukr-dashboard.vercel.app'];
+// app.use(cors({
+//   origin: function (origin, callback) {
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, origin); // Return the actual origin dynamically
+//     } else {
+//       callback(new Error('The CORS policy does not allow this origin'), false);
+//     }
+//   },
+//   credentials: true,
+// }));
 app.use((0, cors_1.default)({
-    origin: function (origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, origin); // Return the actual origin dynamically
-        }
-        else {
-            callback(new Error('The CORS policy does not allow this origin'), false);
-        }
-    },
-    credentials: true,
+    origin: true,
+    credentials: true
 }));
 // Parsers
 app.use(express_1.default.json());
