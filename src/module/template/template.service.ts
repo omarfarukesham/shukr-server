@@ -33,10 +33,9 @@ const updateTemplate = async (id: string, data: ITemplate) => {
   return result;
 };
 
-const deleteTemplate = async (templateId: string, userId: string) => {
+const deleteTemplate = async (templateId: string) => {
   const result = await Template.findOneAndDelete({
     _id: templateId,
-    createdBy: userId,
   });
 
   if (!result) {

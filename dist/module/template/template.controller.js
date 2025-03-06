@@ -59,10 +59,8 @@ const updateTemplate = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
     });
 }));
 const deleteTemplate = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
     const templateId = req.params.id;
-    const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
-    yield template_service_1.templateService.deleteTemplate(templateId, userId);
+    yield template_service_1.templateService.deleteTemplate(templateId);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_codes_1.StatusCodes.OK,
         message: "Template deleted successfully",

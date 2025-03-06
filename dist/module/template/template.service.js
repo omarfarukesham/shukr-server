@@ -40,10 +40,9 @@ const updateTemplate = (id, data) => __awaiter(void 0, void 0, void 0, function*
     });
     return result;
 });
-const deleteTemplate = (templateId, userId) => __awaiter(void 0, void 0, void 0, function* () {
+const deleteTemplate = (templateId) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield template_model_1.default.findOneAndDelete({
         _id: templateId,
-        createdBy: userId,
     });
     if (!result) {
         throw new Error("Template could not be deleted");

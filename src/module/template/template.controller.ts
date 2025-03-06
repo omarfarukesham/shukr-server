@@ -61,9 +61,8 @@ const updateTemplate = catchAsync(async (req, res) => {
 
 const deleteTemplate = catchAsync(async (req, res) => {
   const templateId = req.params.id;
-  const userId = req.user?.id;
-
-  await templateService.deleteTemplate(templateId, userId);
+  
+  await templateService.deleteTemplate(templateId);
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
