@@ -5,7 +5,7 @@ import { templateService } from "./template.service";
 // import { templateService } from "./template.service";
 
 const createTemplate = catchAsync(async (req, res) => {
-    console.log(req.user)
+    // console.log(req.user)
 
   if (!req.user) {
     throw new Error("User is not authenticated");

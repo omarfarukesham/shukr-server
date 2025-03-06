@@ -19,7 +19,7 @@ const sendResponse_1 = __importDefault(require("../../utils/sendResponse"));
 const template_service_1 = require("./template.service");
 // import { templateService } from "./template.service";
 const createTemplate = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(req.user);
+    // console.log(req.user)
     if (!req.user) {
         throw new Error("User is not authenticated");
     }

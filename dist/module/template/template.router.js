@@ -11,6 +11,6 @@ const templateRouter = express_1.default.Router();
 templateRouter.post("/", (0, auth_1.default)(user_constants_1.USER_ROLE.admin, user_constants_1.USER_ROLE.user), template_controller_1.templateController.createTemplate);
 templateRouter.get("/", template_controller_1.templateController.getTemplates);
 templateRouter.get("/:id", template_controller_1.templateController.getSingleTemplate);
-templateRouter.patch("/:id", (0, auth_1.default)(user_constants_1.USER_ROLE.admin, user_constants_1.USER_ROLE.user), template_controller_1.templateController.updateTemplate);
-templateRouter.delete("/:id", (0, auth_1.default)(user_constants_1.USER_ROLE.admin, user_constants_1.USER_ROLE.user), template_controller_1.templateController.deleteTemplate);
+templateRouter.patch("/:id", template_controller_1.templateController.updateTemplate);
+templateRouter.delete("/:id", template_controller_1.templateController.deleteTemplate);
 exports.default = templateRouter;
