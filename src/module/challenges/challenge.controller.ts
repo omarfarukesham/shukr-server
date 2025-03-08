@@ -57,9 +57,9 @@ const updateChallenge = catchAsync(async (req, res) => {
 
 const deleteChallenge = catchAsync(async (req, res) => {
   const challengeId = req.params.id;
-  const userId = req.user?.id;
+  // const userId = req.user?.id;
 
-  await challengeService.deleteChallenge(challengeId, userId);
+  await challengeService.deleteChallenge(challengeId);
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,

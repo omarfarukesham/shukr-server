@@ -57,10 +57,9 @@ const updateChallenge = (0, catchAsync_1.default)((req, res) => __awaiter(void 0
     });
 }));
 const deleteChallenge = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
     const challengeId = req.params.id;
-    const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
-    yield challenge_service_1.challengeService.deleteChallenge(challengeId, userId);
+    // const userId = req.user?.id;
+    yield challenge_service_1.challengeService.deleteChallenge(challengeId);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_codes_1.StatusCodes.OK,
         message: "Challenge deleted successfully",

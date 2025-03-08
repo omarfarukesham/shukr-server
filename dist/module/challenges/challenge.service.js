@@ -71,10 +71,9 @@ const updateChallenge = (id, data) => __awaiter(void 0, void 0, void 0, function
     });
     return result;
 });
-const deleteChallenge = (challengeId, userId) => __awaiter(void 0, void 0, void 0, function* () {
+const deleteChallenge = (challengeId) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield challenge_model_1.default.findOneAndDelete({
         _id: challengeId,
-        createdBy: userId,
     });
     if (!result) {
         throw new Error("Challenge could not be deleted");

@@ -74,10 +74,9 @@ const updateChallenge = async (id: string, data: IChallenge) => {
   return result;
 };
 
-const deleteChallenge = async (challengeId: string, userId: string) => {
+const deleteChallenge = async (challengeId: string) => {
   const result = await Challenge.findOneAndDelete({
     _id: challengeId,
-    createdBy: userId,
   });
 
   if (!result) {
