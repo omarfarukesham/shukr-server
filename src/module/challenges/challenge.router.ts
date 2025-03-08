@@ -13,7 +13,7 @@ const ChallengeRouter = Router();
 // ChallengeRouter.patch("/:id", auth(USER_ROLE.admin, USER_ROLE.user), challengeController.updateChallenge);
 // ChallengeRouter.delete("/:id", auth(USER_ROLE.admin, USER_ROLE.user), challengeController.deleteChallenge);
 
-ChallengeRouter.post("/",  challengeController.createChallenge);
+ChallengeRouter.post("/",  auth(USER_ROLE.admin, USER_ROLE.user), challengeController.createChallenge);
 ChallengeRouter.get("/",   challengeController.getChallenges);
 ChallengeRouter.get("/:id",   challengeController.getSingleChallenge);
 ChallengeRouter.patch("/:id",  challengeController.updateChallenge);
