@@ -40,7 +40,6 @@ const challengeSchema = new Schema(
     userInfo: {
       type: Schema.Types.ObjectId,
       ref: "appUser",
-      required:true
     },
     isActive: {
       type: Boolean,

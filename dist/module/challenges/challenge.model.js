@@ -38,7 +38,6 @@ const challengeSchema = new mongoose_1.Schema({
     userInfo: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "appUser",
-        required: true
     },
     isActive: {
         type: Boolean,

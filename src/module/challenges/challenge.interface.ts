@@ -13,10 +13,10 @@ export interface IChallenge {
     templateId: string[]; 
     isResettable?: boolean;
     reminderTime?: string;
-    userInfo: string[];
+    userInfo?: string[];
     category?: string;
     visibility: "FREE" | "PRO";
-    streak: number;
+    streak?: number;
     createdAt?: Date;
     createdBy?: string;
     updatedAt?: Date;
