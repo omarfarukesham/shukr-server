@@ -1,17 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
-const templateGuideSchema = new mongoose_1.Schema({
-    guideDetails: { type: String, required: false },
-    guideImageUrl: { type: String, required: false },
-    guideVideoUrl: { type: String, required: false },
+const templateDataSchema = new mongoose_1.Schema({
+    type: {
+        type: String,
+        enum: ["description", "question"],
+        required: true,
+    },
+    content: { type: String, required: true },
 });
 const templateSchema = new mongoose_1.Schema({
     title: { type: String, required: true },
     templateImageUrl: { type: String, required: false },
-    templateDetails: { type: String, required: true },
-    templateGuide: [templateGuideSchema],
-    category: { type: String },
+    templateGuide: {
+        type: String,
+        required: false
+    },
+    templateData: [templateDataSchema],
+    category: {
+        type: String,
+        required: true,
+    },
     createdBy: { type: String },
     updatedBy: { type: String },
 }, { timestamps: true });
