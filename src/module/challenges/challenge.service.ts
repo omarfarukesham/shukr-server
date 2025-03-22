@@ -1,7 +1,7 @@
 import QueryBuilder from "../../builder/querybuilder";
 import { IChallenge } from "./challenge.interface";
 import Challenge from "./challenge.model";
-import Template from "../template/template.model";
+// import Template from "../template/template.model";
 
 const createChallenge = async (payload: IChallenge): Promise<IChallenge> => {
   const result = await Challenge.create(payload);
@@ -67,13 +67,58 @@ const getSingleChallenge = async (id: string) => {
   return result;
 };
 
-const updateChallenge = async (id: string, data: IChallenge) => {
-  const result = await Challenge.findOneAndUpdate({ _id: id }, data, {
-    new: true,
-  });
-  return result;
-};
+// const updateChallenge = async (id: string, data: IChallenge) => {
 
+//   if(data.isFeatured) {
+//     const checkedFeatured = await Challenge.find({isFeatured: true});
+//     if(checkedFeatured.length >= 1) {
+//       checkedFeatured[0].isFeatured = false;
+//       await checkedFeatured[0].save();
+//     }
+    
+//   }
+
+//   const result = await Challenge.findOneAndUpdate({ _id: id }, data, {
+//     new: true,
+//   });
+//   return result;
+// };
+
+const updateChallenge = async (id: string, data: IChallenge) => {
+  try {
+    if (data.isFeatured) {
+      const existingFeatured = await Challenge.find({ isFeatured: true });
+      
+      for (const challenge of existingFeatured) {
+        if (challenge._id.toString() !== id) { 
+          challenge.isFeatured = false;
+          await challenge.save();
+        }
+      }
+    }
+
+    const result = await Challenge.findOneAndUpdate(
+      { _id: id },
+      data,
+      {
+        new: true, 
+        runValidators: true 
+      }
+    );
+
+    if (!result) {
+      throw new Error('Challenge not found');
+    }
+
+    return result;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(`Failed to update challenge: ${error.message}`);
+    } else {
+      throw new Error('Failed to update challenge: Unknown error');
+    }
+  }
+};
 const deleteChallenge = async (challengeId: string) => {
   const result = await Challenge.findOneAndDelete({
     _id: challengeId,

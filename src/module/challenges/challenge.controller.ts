@@ -45,7 +45,6 @@ const getSingleChallenge = catchAsync(async (req, res) => {
 const updateChallenge = catchAsync(async (req, res) => {
   const challengeId = req.params.id;
   const body = req.body;
-
   const result = await challengeService.updateChallenge(challengeId, body);
 
   sendResponse(res, {

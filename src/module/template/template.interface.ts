@@ -9,7 +9,6 @@ export interface ITemplate {
   id: string;
   title?: string;
   templateImageUrl?: string;
-  templateDetails?: string;
   templateGuide?: string;
   templateData?: ITemplateData[]; 
   category?: string;

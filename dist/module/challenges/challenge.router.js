@@ -15,6 +15,7 @@ const ChallengeRouter = (0, express_1.Router)();
 // ChallengeRouter.patch("/:id", auth(USER_ROLE.admin, USER_ROLE.user), challengeController.updateChallenge);
 // ChallengeRouter.delete("/:id", auth(USER_ROLE.admin, USER_ROLE.user), challengeController.deleteChallenge);
 ChallengeRouter.post("/", (0, auth_1.default)(user_constants_1.USER_ROLE.admin, user_constants_1.USER_ROLE.user), challenge_controller_1.challengeController.createChallenge);
+// ChallengeRouter.post("/featured", challengeController.getFeaturedChallenges);
 ChallengeRouter.get("/", challenge_controller_1.challengeController.getChallenges);
 ChallengeRouter.get("/:id", challenge_controller_1.challengeController.getSingleChallenge);
 ChallengeRouter.patch("/:id", challenge_controller_1.challengeController.updateChallenge);

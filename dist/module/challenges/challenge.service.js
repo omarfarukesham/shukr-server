@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.challengeService = void 0;
 const querybuilder_1 = __importDefault(require("../../builder/querybuilder"));
 const challenge_model_1 = __importDefault(require("./challenge.model"));
+// import Template from "../template/template.model";
 const createChallenge = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield challenge_model_1.default.create(payload);
     return result;
@@ -65,11 +66,47 @@ const getSingleChallenge = (id) => __awaiter(void 0, void 0, void 0, function* (
     });
     return result;
 });
+// const updateChallenge = async (id: string, data: IChallenge) => {
+//   if(data.isFeatured) {
+//     const checkedFeatured = await Challenge.find({isFeatured: true});
+//     if(checkedFeatured.length >= 1) {
+//       checkedFeatured[0].isFeatured = false;
+//       await checkedFeatured[0].save();
+//     }
+//   }
+//   const result = await Challenge.findOneAndUpdate({ _id: id }, data, {
+//     new: true,
+//   });
+//   return result;
+// };
 const updateChallenge = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield challenge_model_1.default.findOneAndUpdate({ _id: id }, data, {
-        new: true,
-    });
-    return result;
+    try {
+        if (data.isFeatured) {
+            const existingFeatured = yield challenge_model_1.default.find({ isFeatured: true });
+            for (const challenge of existingFeatured) {
+                if (challenge._id.toString() !== id) {
+                    challenge.isFeatured = false;
+                    yield challenge.save();
+                }
+            }
+        }
+        const result = yield challenge_model_1.default.findOneAndUpdate({ _id: id }, data, {
+            new: true,
+            runValidators: true
+        });
+        if (!result) {
+            throw new Error('Challenge not found');
+        }
+        return result;
+    }
+    catch (error) {
+        if (error instanceof Error) {
+            throw new Error(`Failed to update challenge: ${error.message}`);
+        }
+        else {
+            throw new Error('Failed to update challenge: Unknown error');
+        }
+    }
 });
 const deleteChallenge = (challengeId) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield challenge_model_1.default.findOneAndDelete({
