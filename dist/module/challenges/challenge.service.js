@@ -20,23 +20,6 @@ const createChallenge = (payload) => __awaiter(void 0, void 0, void 0, function*
     const result = yield challenge_model_1.default.create(payload);
     return result;
 });
-// Search, filtering, and pagination functions for challenges
-// const getChallenges = async (query: Record<string, unknown>) => {
-//   const searchableFields = ["name", "description", "category"];
-//   const challenges = new QueryBuilder(Challenge.find(), query)
-//     .search(searchableFields)
-//     .filter()
-//     .sort()
-//     .select();
-//   const result = await challenges.modelQuery
-//     .populate("userInfo") 
-//     .populate({
-//       path: "templateId", 
-//       model: "Template",  
-//       options: { strictPopulate: false }, 
-//     });
-//   return result;
-// };
 const getChallenges = (query) => __awaiter(void 0, void 0, void 0, function* () {
     const searchableFields = ["name", "description", "category"];
     const challenges = new querybuilder_1.default(challenge_model_1.default.find(), query)
@@ -66,19 +49,10 @@ const getSingleChallenge = (id) => __awaiter(void 0, void 0, void 0, function* (
     });
     return result;
 });
-// const updateChallenge = async (id: string, data: IChallenge) => {
-//   if(data.isFeatured) {
-//     const checkedFeatured = await Challenge.find({isFeatured: true});
-//     if(checkedFeatured.length >= 1) {
-//       checkedFeatured[0].isFeatured = false;
-//       await checkedFeatured[0].save();
-//     }
-//   }
-//   const result = await Challenge.findOneAndUpdate({ _id: id }, data, {
-//     new: true,
-//   });
-//   return result;
-// };
+const getFeaturedChallenge = (query) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield challenge_model_1.default.find({ isFeatured: true });
+    return result;
+});
 const updateChallenge = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         if (data.isFeatured) {
@@ -121,6 +95,7 @@ exports.challengeService = {
     createChallenge,
     getChallenges,
     getSingleChallenge,
+    getFeaturedChallenge,
     updateChallenge,
     deleteChallenge,
 };

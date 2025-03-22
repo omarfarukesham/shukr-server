@@ -46,6 +46,15 @@ const getSingleChallenge = (0, catchAsync_1.default)((req, res) => __awaiter(voi
         data: result,
     });
 }));
+// new featured challenge implemented here
+const getFeaturedChallenge = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield challenge_service_1.challengeService.getFeaturedChallenge(req.query);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_codes_1.StatusCodes.OK,
+        message: "Challenge Featured  retrieved successfully",
+        data: result,
+    });
+}));
 const updateChallenge = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const challengeId = req.params.id;
     const body = req.body;
@@ -70,6 +79,7 @@ exports.challengeController = {
     createChallenge,
     getChallenges,
     getSingleChallenge,
+    getFeaturedChallenge,
     updateChallenge,
     deleteChallenge,
 };

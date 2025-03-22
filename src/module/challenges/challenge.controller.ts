@@ -42,6 +42,17 @@ const getSingleChallenge = catchAsync(async (req, res) => {
   });
 });
 
+// new featured challenge implemented here
+const getFeaturedChallenge = catchAsync(async (req, res) => {
+  const result = await challengeService.getFeaturedChallenge(req.query);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    message: "Challenge Featured  retrieved successfully",
+    data: result,
+  });
+});
+
 const updateChallenge = catchAsync(async (req, res) => {
   const challengeId = req.params.id;
   const body = req.body;
@@ -71,6 +82,7 @@ export const challengeController = {
   createChallenge,
   getChallenges,
   getSingleChallenge,
+  getFeaturedChallenge,
   updateChallenge,
   deleteChallenge,
 };

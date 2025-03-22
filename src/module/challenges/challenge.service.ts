@@ -8,27 +8,6 @@ const createChallenge = async (payload: IChallenge): Promise<IChallenge> => {
   return result;
 };
 
-// Search, filtering, and pagination functions for challenges
-// const getChallenges = async (query: Record<string, unknown>) => {
-//   const searchableFields = ["name", "description", "category"];
-
-//   const challenges = new QueryBuilder(Challenge.find(), query)
-//     .search(searchableFields)
-//     .filter()
-//     .sort()
-//     .select();
-
-//   const result = await challenges.modelQuery
-//     .populate("userInfo") 
-//     .populate({
-//       path: "templateId", 
-//       model: "Template",  
-//       options: { strictPopulate: false }, 
-//     });
-
-//   return result;
-  
-// };
 
 const getChallenges = async (query: Record<string, unknown>) => {
   const searchableFields = ["name", "description", "category"];
@@ -67,22 +46,11 @@ const getSingleChallenge = async (id: string) => {
   return result;
 };
 
-// const updateChallenge = async (id: string, data: IChallenge) => {
+const getFeaturedChallenge = async (query: Record<string, unknown>) => {
+  const result = await Challenge.find({ isFeatured: true });
+  return result;
+};
 
-//   if(data.isFeatured) {
-//     const checkedFeatured = await Challenge.find({isFeatured: true});
-//     if(checkedFeatured.length >= 1) {
-//       checkedFeatured[0].isFeatured = false;
-//       await checkedFeatured[0].save();
-//     }
-    
-//   }
-
-//   const result = await Challenge.findOneAndUpdate({ _id: id }, data, {
-//     new: true,
-//   });
-//   return result;
-// };
 
 const updateChallenge = async (id: string, data: IChallenge) => {
   try {
@@ -135,6 +103,7 @@ export const challengeService = {
   createChallenge,
   getChallenges,
   getSingleChallenge,
+  getFeaturedChallenge,
   updateChallenge,
   deleteChallenge,
 };

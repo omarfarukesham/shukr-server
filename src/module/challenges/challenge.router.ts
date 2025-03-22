@@ -2,7 +2,6 @@ import { Router } from "express";
 import { challengeController } from "./challenge.controller";
 import auth from "../../middlewares/auth";
 import { USER_ROLE } from "../user/user.constants";
-// import { ChallengeController } from "./challenge.controller";
 
 const ChallengeRouter = Router();
 
@@ -14,7 +13,7 @@ const ChallengeRouter = Router();
 // ChallengeRouter.delete("/:id", auth(USER_ROLE.admin, USER_ROLE.user), challengeController.deleteChallenge);
 
 ChallengeRouter.post("/",  auth(USER_ROLE.admin, USER_ROLE.user), challengeController.createChallenge);
-// ChallengeRouter.post("/featured", challengeController.getFeaturedChallenges);
+ChallengeRouter.get("/featured", challengeController.getFeaturedChallenge);
 ChallengeRouter.get("/",   challengeController.getChallenges);
 ChallengeRouter.get("/:id",   challengeController.getSingleChallenge);
 ChallengeRouter.patch("/:id",  challengeController.updateChallenge);
