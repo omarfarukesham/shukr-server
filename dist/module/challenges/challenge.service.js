@@ -39,8 +39,8 @@ const getChallenges = (query) => __awaiter(void 0, void 0, void 0, function* () 
     })));
     return populatedResult;
 });
-const getSingleChallenge = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield challenge_model_1.default.findById(id)
+const getFeaturedChallenge = (query) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield challenge_model_1.default.find({ isFeatured: true })
         .populate("userInfo")
         .populate({
         path: "templateId",
@@ -49,8 +49,14 @@ const getSingleChallenge = (id) => __awaiter(void 0, void 0, void 0, function* (
     });
     return result;
 });
-const getFeaturedChallenge = (query) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield challenge_model_1.default.find({ isFeatured: true });
+const getSingleChallenge = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield challenge_model_1.default.findById(id)
+        .populate("userInfo")
+        .populate({
+        path: "templateId",
+        model: "Template",
+        options: { strictPopulate: false },
+    });
     return result;
 });
 const updateChallenge = (id, data) => __awaiter(void 0, void 0, void 0, function* () {

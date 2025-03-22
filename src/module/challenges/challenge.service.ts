@@ -33,7 +33,17 @@ const getChallenges = async (query: Record<string, unknown>) => {
 
   return populatedResult;
 };
-
+const getFeaturedChallenge = async (query: Record<string, unknown>) => {
+  const result = await Challenge.find({ isFeatured: true })
+    .populate("userInfo")
+    .populate({
+      path: "templateId",
+      model: "Template",
+      options: { strictPopulate: false },
+    });
+    
+  return result;
+};
 
 const getSingleChallenge = async (id: string) => {
   const result = await Challenge.findById(id)
@@ -46,10 +56,7 @@ const getSingleChallenge = async (id: string) => {
   return result;
 };
 
-const getFeaturedChallenge = async (query: Record<string, unknown>) => {
-  const result = await Challenge.find({ isFeatured: true });
-  return result;
-};
+
 
 
 const updateChallenge = async (id: string, data: IChallenge) => {
