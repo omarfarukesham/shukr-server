@@ -9,7 +9,6 @@ module.exports = {
       watch: false,
       max_memory_restart: "1G",
       env: {
-        NODE_ENV: "production",
         PORT: process.env.PORT || 5000,
         DATABASE_URL: process.env.DATABASE_URL,
         BCRYPT_SALT_ROUNDS: process.env.BCRYPT_SALT_ROUNDS,
