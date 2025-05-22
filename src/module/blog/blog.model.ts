@@ -6,12 +6,26 @@ const blogSchema = new Schema({
         type: String,
         required: true,
         minlength: 5,
-        maxlength: 100,
+      
     },
-    content: {
+    description: {
         type: String,
         required: true,
-        minlength: 10,
+       
+    },
+    category: {
+        type: Schema.Types.ObjectId,
+        ref: 'Category',
+        required: true,
+    },
+    image: {
+        type: String,
+        required: true,
+    
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
     },
     author: {
         type: Schema.Types.ObjectId,

@@ -1,8 +1,10 @@
 export interface IBlog {
     title: string;
-    content: string;
+    image?: string;
+    description?: string;
     author: string;
     isPublished: boolean;
+    category?: string;
     createdAt: Date;
     updatedAt: Date;
   }
