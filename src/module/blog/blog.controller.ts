@@ -23,6 +23,7 @@ const createBlog = catchAsync(
   })
 
 const getBlogs = catchAsync(async (req, res) => {
+  console.log('blog query', req.query)
   const result = await blogService.getBlogs(req.query)
   sendResponse(res, {
     statusCode: StatusCodes.OK,

@@ -69,7 +69,7 @@ const createCategory = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
 });
 exports.createCategory = createCategory;
 const getAllByCategoryType = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    // console.log(req.query)
+    console.log(req.query);
     try {
         const { type } = req.query;
         if (!type || typeof type !== 'string') {
