@@ -50,13 +50,17 @@ const getSingleBlog = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
     });
 }));
 const updateBlog = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!req.user)
+        throw new Error("Unauthorized");
     const blogId = req.params.id;
     const body = req.body;
-    console.log("update blog ......", body, blogId);
-    const result = yield blog_service_1.blogService.updateBlog(blogId, body);
+    const userId = req.user.id;
+    // Example: validate update body using Zod or Joi here (optional)
+    // Pass userId to service for authorization check
+    const result = yield blog_service_1.blogService.updateBlog(blogId, body, userId);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_codes_1.StatusCodes.OK,
-        message: 'Blog updated successfully',
+        message: "Blog updated successfully",
         data: result,
     });
 }));

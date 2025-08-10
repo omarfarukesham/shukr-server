@@ -15,35 +15,61 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.blogService = void 0;
 const querybuilder_1 = __importDefault(require("../../builder/querybuilder"));
 const blog_model_1 = __importDefault(require("./blog.model"));
+const mongoose_1 = __importDefault(require("mongoose"));
 const createBlog = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    //   payload.role = 'admin';
-    const result = (yield blog_model_1.default.create(payload)).populate("author", "name email role");
-    return result;
+    // Create blog first
+    const createdBlog = yield blog_model_1.default.create(payload);
+    // Populate author fields after creation
+    const populatedBlog = yield blog_model_1.default.findById(createdBlog._id).populate("author", "name email role");
+    if (!populatedBlog)
+        throw new Error("Blog creation failed");
+    return populatedBlog;
 });
-// search, filtering and pagination functions for blog posts
+// search, filtering, pagination
 const getBlogs = (query) => __awaiter(void 0, void 0, void 0, function* () {
     const searchableFields = ["title", "content"];
-    const blogs = new querybuilder_1.default(blog_model_1.default.find(), query).search(searchableFields).filter().sort().select();
-    const result = yield blogs.modelQuery.populate("author", "name email role");
-    return result;
+    const blogsQuery = new querybuilder_1.default(blog_model_1.default.find(), query)
+        .search(searchableFields)
+        .filter()
+        .sort()
+        .select();
+    const blogs = yield blogsQuery.modelQuery.populate("author", "name email role");
+    return blogs;
 });
 const getSingleBlog = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield blog_model_1.default.findById(id).populate("author", "name email role");
-    return result;
-});
-const updateBlog = (id, data) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield blog_model_1.default.findOneAndUpdate({ _id: id }, data, {
-        new: true,
-    });
-    return result;
-});
-const deleteBlog = (blogId, userId) => __awaiter(void 0, void 0, void 0, function* () {
-    //  console.log(blogId, userId)
-    const result = yield blog_model_1.default.findByIdAndDelete({ _id: blogId, another: userId });
-    if (result) {
-        throw new Error('Could not delete');
+    if (!mongoose_1.default.Types.ObjectId.isValid(id)) {
+        throw new Error("Invalid blog ID");
     }
-    return result;
+    const blog = yield blog_model_1.default.findById(id).populate("author", "name email role");
+    if (!blog)
+        throw new Error("Blog not found");
+    return blog;
+});
+// Partial update with authorization check (author only)
+const updateBlog = (id, data, userId) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!mongoose_1.default.Types.ObjectId.isValid(id)) {
+        throw new Error("Invalid blog ID");
+    }
+    // Find the blog and ensure author matches userId
+    const blog = yield blog_model_1.default.findOne({ _id: id, author: userId });
+    if (!blog)
+        throw new Error("Blog not found or unauthorized");
+    Object.assign(blog, data);
+    // Save triggers schema validators
+    const updatedBlog = yield blog.save();
+    // Populate before return
+    yield updatedBlog.populate("author", "name email role");
+    return updatedBlog;
+});
+// Delete blog only if owned by userId
+const deleteBlog = (blogId, userId) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!mongoose_1.default.Types.ObjectId.isValid(blogId)) {
+        throw new Error("Invalid blog ID");
+    }
+    const deletedBlog = yield blog_model_1.default.findOneAndDelete({ _id: blogId, author: userId });
+    if (!deletedBlog)
+        throw new Error("Blog not found or unauthorized to delete");
+    return deletedBlog;
 });
 exports.blogService = {
     createBlog,

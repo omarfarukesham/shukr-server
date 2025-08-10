@@ -1,45 +1,96 @@
 import mongoose, { model, Schema } from "mongoose";
 import { IBlog } from "./blog.interface";
 
-const blogSchema = new Schema({
+const blogSchema = new Schema(
+  {
     title: {
-        type: String,
-        required: true,
-        minlength: 5,
-      
+      type: String,
+      required: true,
+      minlength: 5,
+      trim: true,
+    },
+    slug: {
+      type: String,
+      required: false,
+      unique: false,
+      lowercase: true,
+      index: true,
     },
     description: {
-        type: String,
-        required: true,
-       
+      type: String,
+      required: true,
+    },
+    content: {
+      type: String,
+      required: true,
     },
     category: {
-        type: Schema.Types.ObjectId,
-        ref: 'Category',
-        required: true,
+      type: Schema.Types.ObjectId,
+      ref: "Category",
+      required: true,
     },
-    image: {
+    tags: [
+      {
         type: String,
-        required: true,
-    
+        lowercase: true,
+        trim: true,
+      },
+    ],
+    image: {
+      type: String,
+      required: true,
     },
-    createdAt: {
-        type: Date,
-        default: Date.now,
+    thumbnail: {
+      type: String,
     },
     author: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true,
+      type: Schema.Types.ObjectId,
+      ref: "appUser",
+      required: true,
     },
     isPublished: {
-        type: Boolean,
-        default: false,
-    }
-}, 
-{
-    timestamps: true, 
-  });
+      type: Boolean,
+      default: false,
+    },
+    views: {
+      type: Number,
+      default: 0,
+    },
+    likes: {
+      type: Number,
+      default: 0,
+    },
+    comments: [
+      {
+        user: { type: Schema.Types.ObjectId, ref: "User" },
+        text: String,
+        createdAt: { type: Date, default: Date.now },
+      },
+    ],
+    metaTitle: {
+      type: String,
+      maxlength: 60,
+    },
+    metaDescription: {
+      type: String,
+      maxlength: 160,
+    },
+    readTime: {
+      type: Number,
+    },
+    status: {
+      type: String,
+      enum: ["draft", "review", "published", "archived"],
+      default: "draft",
+    },
+    scheduledAt: {
+      type: Date,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
 const Blog = model<IBlog>("appBlog", blogSchema);
 

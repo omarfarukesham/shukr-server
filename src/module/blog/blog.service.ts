@@ -1,45 +1,72 @@
-import QueryBuilder from "../../builder/querybuilder"
-import { IBlog } from "./blog.interface"
-import Blog from "./blog.model"
+import QueryBuilder from "../../builder/querybuilder";
+import { IBlog } from "./blog.interface";
+import Blog from "./blog.model";
+import mongoose from "mongoose";
+import User from '../user/user.model';
 
 const createBlog = async (payload: IBlog): Promise<IBlog> => {
-//   payload.role = 'admin';
-  const result = (await Blog.create(payload)).populate("author", "name email role")
-  return result
-}
+  // Create blog first
+  const createdBlog = await Blog.create(payload);
+  // Populate author fields after creation
+  const populatedBlog = await Blog.findById(createdBlog._id).populate(
+    "author",
+    "name email role"
+  );
+  if (!populatedBlog) throw new Error("Blog creation failed");
+  return populatedBlog;
+};
 
-// search, filtering and pagination functions for blog posts
-const getBlogs = async (query: Record<string, unknown> ) => {
-    const searchableFields = ["title", "content"];
+// search, filtering, pagination
+const getBlogs = async (query: Record<string, unknown>) => {
+  const searchableFields = ["title", "content"];
 
-    const blogs = new QueryBuilder(Blog.find(), query).search(searchableFields).filter().sort().select()
-    const result = await blogs.modelQuery.populate("author", "name email role");
-    return result;
-}
+  const blogsQuery = new QueryBuilder(Blog.find(), query)
+    .search(searchableFields)
+    .filter()
+    .sort()
+    .select();
+
+  const blogs = await blogsQuery.modelQuery.populate("author", "name email role");
+  return blogs;
+};
 
 const getSingleBlog = async (id: string) => {
-  const result = await Blog.findById(id).populate("author", "name email role")
-  return result
-}
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new Error("Invalid blog ID");
+  }
+  const blog = await Blog.findById(id).populate("author", "name email role");
+  if (!blog) throw new Error("Blog not found");
+  return blog;
+};
 
-const updateBlog = async (id: string, data: IBlog) => {
+// Partial update with authorization check (author only)
+const updateBlog = async (id: string, data: Partial<IBlog>, userId: string) => {
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new Error("Invalid blog ID");
+  }
+  // Find the blog and ensure author matches userId
+  const blog = await Blog.findOne({ _id: id, author: userId });
+  if (!blog) throw new Error("Blog not found or unauthorized");
 
-  const result = await Blog.findOneAndUpdate({_id: id}, data, {
-    new: true,
-  })
-  return result
+  Object.assign(blog, data);
 
-}
+  // Save triggers schema validators
+  const updatedBlog = await blog.save();
 
+  // Populate before return
+  await updatedBlog.populate("author", "name email role");
+  return updatedBlog;
+};
+
+// Delete blog only if owned by userId
 const deleteBlog = async (blogId: string, userId: string) => {
-  //  console.log(blogId, userId)
-
-   const result = await Blog.findByIdAndDelete({_id: blogId, another:userId})
-   if(result) {
-    throw new Error ('Could not delete')
-   }
-  return result
-}
+  if (!mongoose.Types.ObjectId.isValid(blogId)) {
+    throw new Error("Invalid blog ID");
+  }
+  const deletedBlog = await Blog.findOneAndDelete({ _id: blogId, author: userId });
+  if (!deletedBlog) throw new Error("Blog not found or unauthorized to delete");
+  return deletedBlog;
+};
 
 export const blogService = {
   createBlog,
@@ -47,4 +74,4 @@ export const blogService = {
   getSingleBlog,
   updateBlog,
   deleteBlog,
-}
+};

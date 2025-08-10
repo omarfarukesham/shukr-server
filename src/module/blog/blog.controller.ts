@@ -45,18 +45,24 @@ const getSingleBlog = catchAsync(async (req, res) => {
 })
 
 const updateBlog = catchAsync(async (req, res) => {
-  const blogId = req.params.id
-  const body = req.body
+  if (!req.user) throw new Error("Unauthorized");
 
-console.log("update blog ......",body, blogId)
-  const result = await blogService.updateBlog(blogId, body)
+  const blogId = req.params.id;
+  const body = req.body;
+  const userId = req.user.id;
+
+  // Example: validate update body using Zod or Joi here (optional)
+
+  // Pass userId to service for authorization check
+  const result = await blogService.updateBlog(blogId, body, userId);
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
-    message: 'Blog updated successfully',
+    message: "Blog updated successfully",
     data: result,
-  })
-})
+  });
+});
+
 
 const deleteBlog = catchAsync(async (req, res) => {
   const blogId = req.params.id
