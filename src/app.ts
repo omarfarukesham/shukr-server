@@ -46,6 +46,7 @@ const app = express()
 //   credentials: true,
 // }));
 
+// CORS configuration
 app.use(cors({
   origin: true, 
   credentials: true
@@ -74,7 +75,7 @@ app.use('/api/challenge', ChallengeRouter)
 app.get('/', (req: Request, res: Response) => {
   res.send({
     status: true,
-    message: 'Shukur Admin Server is now Live - Alhamdulillah',
+    message: 'Shukur Admin Server is now Lives - Alhamdulillah',
   })
 })
 

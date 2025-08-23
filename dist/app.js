@@ -43,6 +43,7 @@ const app = (0, express_1.default)();
 //   },
 //   credentials: true,
 // }));
+// CORS configuration
 app.use((0, cors_1.default)({
     origin: true,
     credentials: true
@@ -64,7 +65,7 @@ app.use('/api/challenge', challenge_router_1.default);
 app.get('/', (req, res) => {
     res.send({
         status: true,
-        message: 'Shukur Admin Server is now Live - Alhamdulillah',
+        message: 'Shukur Admin Server is now Lives - Alhamdulillah',
     });
 });
 app.use(globalErrorHandler_1.globalErrorHandler);
